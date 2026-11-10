@@ -1,5 +1,6 @@
 """RAG Document Chatbot: ingest documents, then ask questions answered from them only."""
 import argparse
+import os
 
 from rag import llm
 from rag.chunking import chunk_text
@@ -7,6 +8,7 @@ from rag.loader import load_documents
 from rag.store import VectorStore
 
 INDEX_DIR = "index"
+MIN_SCORE = float(os.getenv("MIN_SCORE", "0.45"))
 
 PROMPT = """Answer the QUESTION using only the CONTEXT below.
 If the answer is not in the context, say "I could not find that in the documents."
@@ -36,6 +38,9 @@ def ingest(path: str) -> None:
 def ask(question: str, k: int = 4) -> str:
     store = VectorStore.load(INDEX_DIR)
     hits = store.search(llm.embed([question], query=True)[0], k=k)
+    hits = [h for h in hits if h[0] >= MIN_SCORE]
+    if not hits:
+        return "I could not find that in the documents."
     context = "\n\n".join(f"[{c['source']} #{c['id']}] {c['text']}" for _, c in hits)
     return llm.generate(PROMPT.format(context=context, question=question))
 
