@@ -1,0 +1,13 @@
+[
+  {"question": "How many days of paid leave do employees get?", "expected": "24 days"},
+  {"question": "How many unused leave days can be carried forward?", "expected": "8 unused days"},
+  {"question": "How many days of sick leave are there per year?", "expected": "10 days per year"},
+  {"question": "When is a medical certificate needed?", "expected": "longer than 3 days"},
+  {"question": "How many days a week can I work from home?", "expected": "2 days per week"},
+  {"question": "What are the core working hours?", "expected": "11:00 to 16:00"},
+  {"question": "How much are meals reimbursed per day while travelling?", "expected": "1,500 rupees"},
+  {"question": "Which expense claims need a second approval?", "expected": "10,000 rupees"},
+  {"question": "Within how many days must expenses be submitted?", "expected": "30 days"},
+  {"question": "Who won the cricket world cup?", "expected": null},
+  {"question": "What is the company's share price today?", "expected": null}
+]

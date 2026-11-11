@@ -34,6 +34,13 @@ docker run -it --env-file .env rag-chatbot
 The index is created inside the container, so run `ingest` and `chat` in the same session
 (or mount an `index/` volume to keep it).
 
+## Retrieval evaluation
+```bash
+python evaluate.py                       # hit@1, hit@3 and refusal rate on eval/questions.json
+python evaluate.py --chunk-size 80 --overlap 20 -k 5   # compare chunking settings
+```
+Each question lists a text that must appear in a retrieved chunk (or `null` if the documents cannot answer it, so the bot should refuse). Only chunks scoring at least `MIN_SCORE` count, the same rule the chatbot uses. It needs your API key. The test `tests/test_evaluate.py` checks the metric code offline.
+
 ## Tests
 ```bash
 pytest
@@ -42,4 +49,5 @@ pytest
 ## Limitations / next steps
 - Pure vector search; add hybrid search or re-ranking
 - Simple word-based chunking; try sentence/semantic chunking
-- Add a Streamlit UI and retrieval-quality evaluation
+- The evaluation set is tiny (11 questions on one demo file); it shows the method, not a benchmark
+- Add a Streamlit UI
